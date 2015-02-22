@@ -1,14 +1,33 @@
-	<tr>
-		<td><%= task.content %></td>
-		<td><%= task.state %></td> 
-		<td><%= link_to 'Show', task %></td>
-		<td><%= link_to 'Edit', edit_task_path(task) %></td>
-		<td><%= button_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
-		<% if task.state == "Doing" %>
-		<td><%= button_to "Mark as To Do", change_task_path(task, state: "To Do"), method: :put %></td>
-		<td><%= button_to "Mark as To Do", change_task_path(task, state: "Done"), method: :put %></td>
-		<% else %>
-		<td><%= button_to "Mark as Doing", change_task_path(task, state: "Doing"), method: :put %></td>
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<%= link_to edit_task_path(task) do %>
+		created <%= time_ago_in_words(task.created_at) %>
 		<% end %>
-	</tr>
+	</div>
+	<div class="panel-body"><%= task.content %></div>
+	<div class="panel-footer text-center">
+		<% if task.state == "Doing" %>
+		<div style="float:left">
+			<%= button_to "<", change_task_path(task, state: "To Do"), method: :put, class: "btn btn-info btn-md btn-block" %>
+		</div>
+		<div style="float:right">
+			<%= button_to ">", change_task_path(task, state: "Done"), method: :put, class: "btn btn-info btn-md btn-block" %>
+		</div>
+		<div style="clear:both;">
+		</div>
+		<% elsif task.state == "Done" %>
+		<div style="float:left">
+			<%= button_to "<", change_task_path(task, state: "Doing"), method: :put, class: "btn btn-info btn-md btn-block" %>
+		</div>
+		<div style="clear:both;">
+		</div>
+		<% else %>
+		<div style="float:right">
+			<%= button_to ">", change_task_path(task, state: "Doing"), method: :put, class: "btn btn-info btn-md btn-block" %>
+		</div>
+		<div style="clear:both;">
+		</div>
+		<% end %>
+	</div>
+</div>
